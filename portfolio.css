@@ -1,0 +1,49 @@
+/* チルな雰囲気を作る基本設定 */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf7; /* 温かみのあるオフホワイト */
+    color: #4a4a4a;           /* きつすぎないグレー */
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    margin: 80px 0;
+    text-align: center;
+}
+
+h1 {
+    font-weight: 200;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* ギャラリーのレイアウト */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.photo-item img {
+    width: 100%;
+    height: auto;
+    filter: grayscale(20%); /* 少し彩度を落として落ち着かせる */
+    transition: 0.5s;
+}
+
+.photo-item img:hover {
+    filter: grayscale(0%); /* ホバーした時だけ本来の色に */
+}
+
+footer {
+    margin: 100px 0 40px;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
