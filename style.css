@@ -1,46 +1,37 @@
 /* =========================================
-   Tokoyami Photo - Chill Portfolio Styles
+   Tokoyami Photo - Masonry Layout (No Crop)
    ========================================= */
 
-/* 基本設定：温かみのある背景と、目に優しい文字色 */
 body {
     margin: 0;
     padding: 0;
-    background-color: #fdfaf7; /* オフホワイト */
-    color: #4a4a4a;           /* 柔らかいグレー */
+    background-color: #fdfaf7;
+    color: #4a4a4a;
     font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
     line-height: 1.6;
     display: flex;
     flex-direction: column;
-    align-items: center;      /* 全体を中央に寄せる */
+    align-items: center;
     min-height: 100vh;
 }
 
-/* ヘッダー：ゆったりとした余白 */
 header {
-    margin: 100px 0 60px;
+    margin: 80px 0 50px;
     text-align: center;
 }
 
 h1 {
-    font-weight: 200;         /* 細めのフォントで洗練された印象に */
-    letter-spacing: 0.3em;    /* 文字間隔を広げて「チル」感を演出 */
+    font-weight: 200;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     margin-bottom: 10px;
 }
 
-header p {
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    opacity: 0.7;
-}
-
-/* ギャラリー：枚数に関わらず中央に配置 */
+/* ギャラリー：段組み（カラム）レイアウト */
 .gallery {
-    display: flex;
-    flex-wrap: wrap;          /* 画面幅に合わせて折り返す */
-    justify-content: center;  /* ★中身を常に中央へ */
-    gap: 40px;                /* 写真同士のゆとりある隙間 */
+    /* 横に何列並べるか（PCでは3列） */
+    column-count: 3;
+    column-gap: 20px; /* 列同士の隙間 */
     width: 90%;
     max-width: 1200px;
     margin-bottom: 60px;
@@ -48,60 +39,70 @@ header p {
 
 /* 各写真の枠 */
 .photo-item {
-    flex: 0 1 350px;          /* 基本350px幅、画面に合わせて縮小 */
-    max-width: 100%;
+    display: inline-block; /* 段組みの中でバラバラにならないように */
+    width: 100%;
+    margin-bottom: 20px;   /* 下の写真との隙間 */
+    background-color: #eee;
+    break-inside: avoid;   /* 写真が途中で途切れるのを防ぐ */
 }
 
 .photo-item img {
     width: 100%;
-    height: auto;
+    height: auto;          /* ★重要：写真本来の比率を維持 */
     display: block;
-    filter: grayscale(20%);    /* わずかに彩度を落として落ち着かせる */
+    filter: grayscale(20%);
     transition: transform 0.6s ease, filter 0.6s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* 非常に薄い影 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
 }
 
-/* ホバー時の演出 */
 .photo-item img:hover {
-    filter: grayscale(0%);     /* 本来の色に戻る */
-    transform: scale(1.02);    /* ほんの少しだけ大きく */
+    filter: grayscale(0%);
+    transform: scale(1.03);
 }
 
-/* SNSアイコンセクション */
+/* SNSアイコン */
 .social-links {
-    margin: 40px 0 20px;
+    margin-top: 20px;
     display: flex;
-    gap: 40px;
+    gap: 30px;
 }
 
 .social-links a {
     color: #4a4a4a;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     text-decoration: none;
-    transition: 0.4s ease;
-    opacity: 0.5;              /* 普段は控えめに表示 */
-}
-
-.social-links a:hover {
-    opacity: 1;                /* 重ねた時だけはっきり見せる */
-    transform: translateY(-5px); /* ふわっと浮き上がる */
-}
-
-/* フッター */
-footer {
-    margin-top: auto;          /* ページが短くても一番下に配置 */
-    padding: 60px 0 40px;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    transition: 0.3s;
     opacity: 0.5;
 }
 
-/* スマホ表示用の微調整 */
-@media (max-width: 600px) {
-    header {
-        margin: 60px 0 40px;
-    }
+.social-links a:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+footer {
+    margin-top: auto;
+    padding: 60px 0 40px;
+    font-size: 0.75rem;
+    opacity: 0.5;
+}
+
+/* --- レスポンシブ対応 --- */
+
+/* タブレット（2列） */
+@media (max-width: 900px) {
     .gallery {
-        gap: 20px;
+        column-count: 2;
+    }
+}
+
+/* スマホ（1列） */
+@media (max-width: 600px) {
+    .gallery {
+        column-count: 1;
+        gap: 15px;
+    }
+    header {
+        margin: 60px 0 30px;
     }
 }
