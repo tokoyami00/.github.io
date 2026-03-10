@@ -1,9 +1,9 @@
-/* チルな雰囲気を作る基本設定 */
+/* 基本設定（変更なし） */
 body {
     margin: 0;
     padding: 0;
-    background-color: #fdfaf7; /* 温かみのあるオフホワイト */
-    color: #4a4a4a;           /* きつすぎないグレー */
+    background-color: #fdfaf7;
+    color: #4a4a4a;
     font-family: "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
     display: flex;
@@ -22,24 +22,32 @@ h1 {
     text-transform: uppercase;
 }
 
-/* ギャラリーのレイアウト */
+/* ★ここを変更：ギャラリーを中央寄せにする設定 */
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    display: flex;          /* 横並びにする */
+    flex-wrap: wrap;       /* 画面幅が狭くなったら折り返す */
+    justify-content: center; /* ★中身を中央に寄せる */
+    gap: 30px;              /* 写真同士の隙間 */
     width: 90%;
     max-width: 1200px;
+    margin: 0 auto;
+}
+
+.photo-item {
+    flex: 0 1 350px;       /* 写真の基本サイズを350pxに設定 */
+    max-width: 100%;
 }
 
 .photo-item img {
     width: 100%;
     height: auto;
-    filter: grayscale(20%); /* 少し彩度を落として落ち着かせる */
+    filter: grayscale(20%);
     transition: 0.5s;
+    display: block;        /* 下の変な隙間を消す */
 }
 
 .photo-item img:hover {
-    filter: grayscale(0%); /* ホバーした時だけ本来の色に */
+    filter: grayscale(0%);
 }
 
 footer {
