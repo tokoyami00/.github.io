@@ -1,30 +1,63 @@
-body { margin: 0; padding: 0; overflow: hidden; background-color: #000; }
-
-canvas#webgl {
-    display: block;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 1;
+/* ページ全体の設定 */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 画面スクロールを禁止 */
+    background-color: #000; /* 3D空間の背景色 */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #fff; /* 必要に応じて文字色 */
+    cursor: default; /* デフォルトのカーソル */
 }
 
+/* Three.jsが描画されるキャンバスのスタイル */
+canvas#webgl {
+    display: block; /* 余分な隙間をなくす */
+    position: fixed; /* 画面いっぱいに固定 */
+    top: 0;
+    left: 0;
+    width: 100vw; /* ビューポートの幅いっぱいに */
+    height: 100vh; /* ビューポートの高さいっぱいに */
+    z-index: 1; /* 他のUI要素より奥に配置 */
+}
+
+/* フォト作品表示モーダルのスタイル */
 #modal {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9); /* 半透明の黒い背景 */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
-    transition: opacity 0.3s;
-    cursor: pointer;
+    z-index: 100; /* 最前面に表示 */
+    backdrop-filter: blur(10px); /* 背景をぼかす（対応ブラウザのみ） */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease, visibility 0.4s ease; /* 表示/非表示のアニメーション */
+    cursor: pointer; /* クリックで閉じられることを示すカーソル */
 }
 
-#modal.hidden { opacity: 0; pointer-events: none; }
+/* モーダルが非表示の状態 */
+#modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* 非表示時はクリックイベントを無効に */
+}
 
+/* モーダル内の画像のスタイル */
 #modal-img {
-    max-width: 80%;
-    max-height: 80%;
-    border: 1px solid rgba(255,255,255,0.3);
+    max-width: 85%; /* 画面幅に対する最大サイズ */
+    max-height: 85%; /* 画面高さに対する最大サイズ */
+    object-fit: contain; /* 画像全体が収まるように表示 */
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.4), 0 0 80px rgba(0, 255, 255, 0.2); /* 光るような影 */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* わずかな枠線 */
+    transform: scale(0.9); /* 少し縮小された状態から開始 */
+    transition: transform 0.4s ease; /* 表示時のアニメーション */
+}
+
+/* モーダル表示時に画像を拡大 */
+#modal:not(.hidden) #modal-img {
+    transform: scale(1);
 }
