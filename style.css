@@ -1,3 +1,7 @@
+/* =========================================
+   Tokoyami Photo - 3D Atmosphere Portfolio
+   ========================================= */
+
 /* 基本設定 */
 body {
     margin: 0;
@@ -11,18 +15,54 @@ body {
     min-height: 100vh;
 }
 
+/* 浮遊する光のオブジェクト */
+.glowing-orb {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(200,200,255,0.3) 70%);
+    border-radius: 50%;
+    margin: 80px 0 30px;
+    box-shadow: 0 0 50px rgba(255,255,255,0.8);
+    animation: float 4s ease-in-out infinite, 
+               rotate 10s linear infinite, 
+               pulse 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; filter: blur(10px); }
+    50% { opacity: 1; filter: blur(5px); }
+}
+
+/* ヘッダー */
 header {
-    margin: 80px 0 50px;
     text-align: center;
+    margin-bottom: 50px;
 }
 
 h1 {
     font-weight: 200;
     letter-spacing: 0.3em;
     text-transform: uppercase;
+    margin: 0;
 }
 
-/* ギャラリー：列数を強制指定 */
+header p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 10px;
+}
+
+/* ギャラリー：メイソンリーレイアウト */
 .gallery {
     column-count: 3;
     column-gap: 20px;
@@ -35,7 +75,7 @@ h1 {
     display: inline-block;
     width: 100%;
     margin-bottom: 20px;
-    break-inside: avoid; /* ここで列をまたがないように固定 */
+    break-inside: avoid;
 }
 
 .photo-item img {
@@ -43,7 +83,8 @@ h1 {
     height: auto;
     display: block;
     filter: grayscale(20%);
-    transition: 0.5s;
+    transition: transform 0.6s ease, filter 0.6s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .photo-item img:hover {
@@ -54,27 +95,31 @@ h1 {
 /* SNS */
 .social-links {
     margin-bottom: 40px;
+    display: flex;
+    gap: 30px;
 }
 
 .social-links a {
-    margin: 0 15px;
     color: #4a4a4a;
     font-size: 1.6rem;
     text-decoration: none;
     opacity: 0.5;
+    transition: 0.3s;
 }
 
 .social-links a:hover {
     opacity: 1;
+    transform: translateY(-3px);
 }
 
+/* フッター */
 footer {
+    margin-top: auto;
     padding-bottom: 40px;
     font-size: 0.8rem;
     opacity: 0.5;
 }
 
 /* スマホ対応 */
-@media (max-width: 600px) {
-    .gallery { column-count: 1; }
-}
+@media (max-width: 900px) { .gallery { column-count: 2; } }
+@media (max-width: 600px) { .gallery { column-count: 1; } }
