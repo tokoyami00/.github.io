@@ -1,14 +1,10 @@
-/* =========================================
-   Tokoyami Photo - Masonry Layout (No Crop)
-   ========================================= */
-
+/* 基本設定 */
 body {
     margin: 0;
     padding: 0;
     background-color: #fdfaf7;
     color: #4a4a4a;
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-    line-height: 1.6;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,35 +20,30 @@ h1 {
     font-weight: 200;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    margin-bottom: 10px;
 }
 
-/* ギャラリー：段組み（カラム）レイアウト */
+/* ギャラリー：列数を強制指定 */
 .gallery {
-    /* 横に何列並べるか（PCでは3列） */
     column-count: 3;
-    column-gap: 20px; /* 列同士の隙間 */
+    column-gap: 20px;
     width: 90%;
     max-width: 1200px;
     margin-bottom: 60px;
 }
 
-/* 各写真の枠 */
 .photo-item {
-    display: inline-block; /* 段組みの中でバラバラにならないように */
+    display: inline-block;
     width: 100%;
-    margin-bottom: 20px;   /* 下の写真との隙間 */
-    background-color: #eee;
-    break-inside: avoid;   /* 写真が途中で途切れるのを防ぐ */
+    margin-bottom: 20px;
+    break-inside: avoid; /* ここで列をまたがないように固定 */
 }
 
 .photo-item img {
     width: 100%;
-    height: auto;          /* ★重要：写真本来の比率を維持 */
+    height: auto;
     display: block;
     filter: grayscale(20%);
-    transition: transform 0.6s ease, filter 0.6s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: 0.5s;
 }
 
 .photo-item img:hover {
@@ -60,49 +51,30 @@ h1 {
     transform: scale(1.03);
 }
 
-/* SNSアイコン */
+/* SNS */
 .social-links {
-    margin-top: 20px;
-    display: flex;
-    gap: 30px;
+    margin-bottom: 40px;
 }
 
 .social-links a {
+    margin: 0 15px;
     color: #4a4a4a;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     text-decoration: none;
-    transition: 0.3s;
     opacity: 0.5;
 }
 
 .social-links a:hover {
     opacity: 1;
-    transform: translateY(-3px);
 }
 
 footer {
-    margin-top: auto;
-    padding: 60px 0 40px;
-    font-size: 0.75rem;
+    padding-bottom: 40px;
+    font-size: 0.8rem;
     opacity: 0.5;
 }
 
-/* --- レスポンシブ対応 --- */
-
-/* タブレット（2列） */
-@media (max-width: 900px) {
-    .gallery {
-        column-count: 2;
-    }
-}
-
-/* スマホ（1列） */
+/* スマホ対応 */
 @media (max-width: 600px) {
-    .gallery {
-        column-count: 1;
-        gap: 15px;
-    }
-    header {
-        margin: 60px 0 30px;
-    }
+    .gallery { column-count: 1; }
 }
