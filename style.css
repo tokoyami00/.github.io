@@ -1,125 +1,63 @@
 /* =========================================
-   Tokoyami Photo - 3D Atmosphere Portfolio
+   Tokoyami Photo - 3D Web Experience Styles
    ========================================= */
 
-/* 基本設定 */
 body {
     margin: 0;
     padding: 0;
-    background-color: #fdfaf7;
-    color: #4a4a4a;
+    overflow: hidden; /* スクロールを無効にして3Dキャンバスを固定 */
+    background-color: #000; /* 3D空間の背景を暗めに */
     font-family: "Helvetica Neue", Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+    color: #fff; /* 通常の文字は白に（モーダル以外は使わない想定） */
 }
 
-/* 浮遊する光のオブジェクト */
-.glowing-orb {
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(200,200,255,0.3) 70%);
-    border-radius: 50%;
-    margin: 80px 0 30px;
-    box-shadow: 0 0 50px rgba(255,255,255,0.8);
-    animation: float 4s ease-in-out infinite, 
-               rotate 10s linear infinite, 
-               pulse 2s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 0.6; filter: blur(10px); }
-    50% { opacity: 1; filter: blur(5px); }
-}
-
-/* ヘッダー */
-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-h1 {
-    font-weight: 200;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    margin: 0;
-}
-
-header p {
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-top: 10px;
-}
-
-/* ギャラリー：メイソンリーレイアウト */
-.gallery {
-    column-count: 3;
-    column-gap: 20px;
-    width: 90%;
-    max-width: 1200px;
-    margin-bottom: 60px;
-}
-
-.photo-item {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 20px;
-    break-inside: avoid;
-}
-
-.photo-item img {
-    width: 100%;
-    height: auto;
+/* Three.jsが描画するキャンバス */
+canvas#webgl {
     display: block;
-    filter: grayscale(20%);
-    transition: transform 0.6s ease, filter 0.6s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    position: fixed; /* 画面いっぱいに固定 */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; /* 他の要素より奥に */
 }
 
-.photo-item img:hover {
-    filter: grayscale(0%);
-    transform: scale(1.03);
-}
-
-/* SNS */
-.social-links {
-    margin-bottom: 40px;
+/* 作品表示モーダル */
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9); /* 半透明の黒背景 */
     display: flex;
-    gap: 30px;
-}
-
-.social-links a {
-    color: #4a4a4a;
-    font-size: 1.6rem;
-    text-decoration: none;
-    opacity: 0.5;
-    transition: 0.3s;
-}
-
-.social-links a:hover {
+    justify-content: center;
+    align-items: center;
+    z-index: 100; /* 最前面に表示 */
+    backdrop-filter: blur(10px); /* 背景をぼかす（対応ブラウザのみ） */
     opacity: 1;
-    transform: translateY(-3px);
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: pointer; /* クリックで閉じられることを示す */
 }
 
-/* フッター */
-footer {
-    margin-top: auto;
-    padding-bottom: 40px;
-    font-size: 0.8rem;
-    opacity: 0.5;
+#modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* 非表示時はクリックイベントを無効に */
 }
 
-/* スマホ対応 */
-@media (max-width: 900px) { .gallery { column-count: 2; } }
-@media (max-width: 600px) { .gallery { column-count: 1; } }
+#modal-img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* 画像全体を表示 */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); /* 光るような影 */
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+#modal.visible #modal-img {
+    transform: scale(1);
+}
+
+/* ロード中のスピナーなどのUIが必要であればここに追加 */
